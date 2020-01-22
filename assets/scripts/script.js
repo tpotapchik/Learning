@@ -87,6 +87,12 @@ document.getElementById('implicit').addEventListener('click', () => {
     console.log(undefined == undefined);
     console.log(NaN == NaN);
     console.log(NaN == 'any value');
+    console.log('' + 1 + 0);
+    console.log('' - 1 + 0);
+    console.log(null + 1);
+    console.log(undefined + 1);
+    console.log(7 / 0);
+    console.log(' \t \n' - 2); //-2
 });
 
 //for cycle
