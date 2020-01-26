@@ -290,3 +290,72 @@ document.getElementById('callbacks').addEventListener('click', () => {
     console.log(result);
     console.log(result2);
 });
+
+//task 1
+document.getElementById('checkIfPalindrome').addEventListener('click', () => {
+    function isPalindrome(value) {
+        let lowerCaseValue = value.toLowerCase();
+        let splittedValue = lowerCaseValue.split('');
+        let reverseValue = splittedValue.reverse().join('');
+
+        if (lowerCaseValue === reverseValue) {
+            console.log(`${value} is a palindrome`);
+        }
+        else {
+            console.log(`${value} is not a palindrome`);
+        }
+    }
+
+    isPalindrome('Шалаш');
+    isPalindrome('привет');
+});
+
+//task 2
+document.getElementById('uniqueArrayNumbers').addEventListener('click', () => {
+    const arr = [];
+    arr.length = 7;
+    const sortFunction = (a, b) => (a - b);
+
+    const getRandomNumber = (numbers) => {
+        const random = Math.round(Math.random() * 10);
+        if (numbers.includes(random, 0)) {
+            return getRandomNumber(numbers);
+        } else {
+            return random;
+        }
+    };
+
+    for (let i = 0; i < arr.length; i++) {
+        arr[i] = getRandomNumber(arr);
+    }
+
+    console.log('arr ' + arr);
+    console.log('arr ' + arr.sort(sortFunction));
+});
+
+
+//task 3
+document.getElementById('arrayNumbersToZero').addEventListener('click', () => {
+    const arr = [];
+    arr.length = 10;
+
+    for (let i = 0; i < arr.length; i++) {
+        let number = Math.round(Math.random() * 100);
+        let numberStringArray = number.toString().split('');
+
+        for (let i = 1; i < numberStringArray.length; i++) {
+            if (numberStringArray[i] === '0') {
+                numberStringArray.splice(i, 1, 'zero');
+            }
+        }
+
+        let resultString = numberStringArray.join('');
+        if (!isNaN(resultString)) {
+            resultString = +resultString;
+        }
+
+        arr[i] = resultString;
+    }
+    console.log(arr);
+});
+
