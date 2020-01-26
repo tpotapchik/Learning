@@ -126,7 +126,7 @@ document.getElementById('arrayFor').addEventListener('click', () => {
             }
         }
 
-        if (user !== null) {
+        if (user) {
             console.log(`user name: ${user.firstName} ${user.lastName}; user age: ${user.age}.`);
         }
         else {
@@ -138,6 +138,155 @@ document.getElementById('arrayFor').addEventListener('click', () => {
     }
 });
 
-//
+//for of Example Array
+document.getElementById('forOfExampleArray').addEventListener('click', () => {
+    let arr = ['1a', '2b', '3c'];
 
+    for (let val of arr) {
+        console.log(val);
+    }
+});
 
+//functions examples + closure
+document.getElementById('closure').addEventListener('click', () => {
+    function hello(name) {
+        return `Hello ${name}`;
+    }
+
+    console.log(hello('Tanya'));
+
+    const greet = (name) => {
+        return `Hello again ${name}`;
+    };
+
+    console.log(greet('Tanya'));
+
+//closure замык
+    function sum(a, b) {
+        let sum1 = a + b;
+        return function () {
+            console.log(sum1);
+        }
+    }
+
+    let showSum1 = sum(2, 5);
+    showSum1();
+
+    let showSum2 = sum(5, 10);
+    showSum2();
+
+    showSum1();
+
+//return new array but function is one
+    let arr = ['1', '2', '3'];
+
+    function modifyArray(arr, modifier) {
+        for (let i = 0; i < arr.length; i++) {
+            arr[i] = modifier(arr[i]);
+        }
+        return arr;
+    }
+
+    const multiplyBy2 = item => item * 2;
+    const powBy3 = item => item ** 3;
+
+    arr = modifyArray(arr, multiplyBy2);
+    console.log(arr);
+    arr = modifyArray(arr, powBy3);
+    console.log(arr);
+
+    //function is one
+    function getRaiser(pow) {
+        return function (num) {
+            return num ** pow;
+        }
+    }
+
+    const squared = getRaiser(2);
+    console.log(squared(2)); //4
+
+    const cube = getRaiser(3);
+    console.log(cube(2)); //8
+
+    console.log(getRaiser(2)(3));
+
+    //лишние аргументы игнорируюся
+    function sumAll(a, b, c, d, e, f) {
+        return a + b + c + d + e + f;
+    }
+
+    console.log(sumAll(1, 2, 3, 4, 5, 6, 7, 8, 9));
+});
+
+//rest and spread
+document.getElementById('restSpread').addEventListener('click', () => {
+    //spread
+    const numbers = [1, 2, 3, 4, 5];
+    console.log(Math.max(numbers)); //NaN
+    console.log(Math.max(1, 2, 3, 4, 5)); //5
+
+    console.log(Math.max(...numbers)); //5
+    console.log(...numbers);// 1 2 3 4 5
+
+    //rest operator
+    function summarizeAll(...numbers) {
+        let total = 0;
+        for (let number of numbers) {
+            total += number;
+        }
+        return total;
+    }
+
+    let result = summarizeAll(1, 2, 3, 4, 5, 6, 7, 8, 9); // 45
+    console.log(result);
+
+    function summarizeAll2(first, second, ...numbers) {
+        let total = first + second;
+        for (let number of numbers) {
+            total += number;
+        }
+        return total;
+    }
+
+    let result2 = summarizeAll2(1, 2, 3, 4, 5, 6, 7, 8, 9); // 45
+    console.log(result2);
+});
+
+//callbacks
+document.getElementById('callbacks').addEventListener('click', () => {
+// instead of of two functions
+    const arr = ['Tanya', 'Misha', 'Lera', 'Andrey'];
+    let newArr1 = [];
+    for (let i = 0; i < arr.length; i++) {
+        newArr1.push(arr[i].length);
+    }
+    console.log(newArr1);
+
+    let newArr2 = [];
+    for (let i = 0; i < arr.length; i++) {
+        newArr2.push(arr[i].toUpperCase());
+    }
+    console.log(newArr2);
+
+//we can use callbacks
+    function mapArray(arr, fn) {
+        const res = [];
+        for (let i = 0; i < arr.length; i++) {
+            res.push(fn(arr[i]));
+        }
+        return res;
+    }
+
+    function getNameLength(el) {
+        return el.length;
+    }
+
+    function getNameUppercase(el) {
+        return el.toUpperCase();
+    }
+
+    const result = mapArray(arr, getNameLength);
+    const result2 = mapArray(arr, getNameUppercase);
+    console.log(result);
+    console.log(result2);
+});
