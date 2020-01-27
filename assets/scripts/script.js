@@ -294,11 +294,10 @@ document.getElementById('callbacks').addEventListener('click', () => {
 //task 1
 document.getElementById('checkIfPalindrome').addEventListener('click', () => {
     function isPalindrome(value) {
-        let lowerCaseValue = value.toLowerCase();
-        let splittedValue = lowerCaseValue.split('');
-        let reverseValue = splittedValue.reverse().join('');
+        value = value.toLowerCase();
+        let revertedValue = value.split('').reverse().join('');
 
-        if (lowerCaseValue === reverseValue) {
+        if (value === revertedValue) {
             console.log(`${value} is a palindrome`);
         }
         else {
@@ -341,20 +340,14 @@ document.getElementById('arrayNumbersToZero').addEventListener('click', () => {
 
     for (let i = 0; i < arr.length; i++) {
         let number = Math.round(Math.random() * 100);
-        let numberStringArray = number.toString().split('');
 
-        for (let i = 1; i < numberStringArray.length; i++) {
-            if (numberStringArray[i] === '0') {
-                numberStringArray.splice(i, 1, 'zero');
-            }
+        if (number % 10 === 0) {
+            number = number.toString().split('0').join('zero');
+            arr[i] = number;
         }
-
-        let resultString = numberStringArray.join('');
-        if (!isNaN(resultString)) {
-            resultString = +resultString;
+        else {
+            arr[i] = number;
         }
-
-        arr[i] = resultString;
     }
     console.log(arr);
 });
