@@ -290,3 +290,85 @@ document.getElementById('callbacks').addEventListener('click', () => {
     console.log(result);
     console.log(result2);
 });
+
+//task 1
+document.getElementById('checkIfPalindrome').addEventListener('click', () => {
+    function isPalindrome(value) {
+        value = value.toLowerCase();
+        let revertedValue = value.split('').reverse().join('');
+
+        if (value === revertedValue) {
+            console.log(`${value} is a palindrome`);
+        }
+        else {
+            console.log(`${value} is not a palindrome`);
+        }
+    }
+
+    isPalindrome('Шалаш');
+    isPalindrome('привет');
+});
+
+//task 2
+document.getElementById('uniqueArrayNumbers1').addEventListener('click', () => {
+    const arr = [];
+    arr.length = 7;
+    const sortFunction = (a, b) => (a - b);
+
+    const getRandomNumber = (numbers) => {
+        const random = Math.round(Math.random() * 10);
+        if (numbers.includes(random, 0)) {
+            return getRandomNumber(numbers);
+        } else {
+            return random;
+        }
+    };
+
+    for (let i = 0; i < arr.length; i++) {
+        arr[i] = getRandomNumber(arr);
+    }
+
+    console.log('arr ' + arr);
+    console.log('arr ' + arr.sort(sortFunction));
+});
+
+document.getElementById('uniqueArrayNumbers2').addEventListener('click', () => {
+    let arr = [];
+    arr.length = 7;
+    const getRandom = function (min, max) {
+        return Math.round(Math.random() * (max - min) + min);
+    };
+
+    const sortFunction = (a, b) => (a - b);
+
+    for (let i = 0; i < arr.length; i++) {
+        let random = getRandom(0, 10);
+
+        while (arr.includes(random)) {
+            random = getRandom(0, 10);
+        }
+        arr[i] = random;
+    }
+
+    console.log('arr ' + arr);
+    console.log('arr ' + arr.sort(sortFunction));
+});
+
+//task 3
+document.getElementById('arrayNumbersToZero').addEventListener('click', () => {
+    const arr = [];
+    arr.length = 10;
+
+    for (let i = 0; i < arr.length; i++) {
+        let number = Math.round(Math.random() * 100);
+
+        if (number % 10 === 0) {
+            number = number.toString().split('0').join('zero');
+            arr[i] = number;
+        }
+        else {
+            arr[i] = number;
+        }
+    }
+    console.log(arr);
+});
