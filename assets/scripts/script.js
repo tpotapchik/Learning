@@ -310,7 +310,7 @@ document.getElementById('checkIfPalindrome').addEventListener('click', () => {
 });
 
 //task 2
-document.getElementById('uniqueArrayNumbers').addEventListener('click', () => {
+document.getElementById('uniqueArrayNumbers1').addEventListener('click', () => {
     const arr = [];
     arr.length = 7;
     const sortFunction = (a, b) => (a - b);
@@ -332,6 +332,27 @@ document.getElementById('uniqueArrayNumbers').addEventListener('click', () => {
     console.log('arr ' + arr.sort(sortFunction));
 });
 
+document.getElementById('uniqueArrayNumbers2').addEventListener('click', () => {
+    let arr = [];
+    arr.length = 7;
+    const getRandom = function (min, max) {
+        return Math.round(Math.random() * (max - min) + min);
+    };
+
+    const sortFunction = (a, b) => (a - b);
+
+    for (let i = 0; i < arr.length; i++) {
+        let random = getRandom(0, 10);
+
+        while (arr.includes(random)) {
+            random = getRandom(0, 10);
+        }
+        arr[i] = random;
+    }
+
+    console.log('arr ' + arr);
+    console.log('arr ' + arr.sort(sortFunction));
+});
 
 //task 3
 document.getElementById('arrayNumbersToZero').addEventListener('click', () => {
@@ -351,4 +372,3 @@ document.getElementById('arrayNumbersToZero').addEventListener('click', () => {
     }
     console.log(arr);
 });
-
