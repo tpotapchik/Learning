@@ -309,7 +309,7 @@ document.getElementById('checkIfPalindrome').addEventListener('click', () => {
     isPalindrome('привет');
 });
 
-//task 2
+//task 2 more complex
 document.getElementById('uniqueArrayNumbers1').addEventListener('click', () => {
     const arr = [];
     arr.length = 7;
@@ -332,6 +332,7 @@ document.getElementById('uniqueArrayNumbers1').addEventListener('click', () => {
     console.log('arr ' + arr.sort(sortFunction));
 });
 
+//task 2 simple
 document.getElementById('uniqueArrayNumbers2').addEventListener('click', () => {
     let arr = [];
     arr.length = 7;
@@ -372,3 +373,184 @@ document.getElementById('arrayNumbersToZero').addEventListener('click', () => {
     }
     console.log(arr);
 });
+
+document.getElementById('callBind').addEventListener('click', () => {
+//closure
+    function greet(name) {
+        return function () {
+            return `Привет, ${name}`;
+        }
+    }
+
+    let helloWorld = greet('мир!');
+    console.log(helloWorld());
+
+    let arr = [0, 1, 2].map(item => {
+        return item *= 2;
+    });
+    console.log(arr);
+
+//call
+    function getSquare(s1, s2) {
+        return this.x * this.y + s1 + s2;
+    }
+
+    const balcon = 3;
+    const door = 1;
+    let first = {
+        x: 4,
+        y: 10
+    };
+
+    let second = {
+        x: 8,
+        y: 10
+    };
+
+    let firstS = getSquare.call(first, balcon, door);
+    let secondS = getSquare.call(second, balcon, door);
+
+    console.log(firstS);
+    console.log(secondS);
+
+// call vs bind
+    function sum1(i, k) {
+        return this.a + this.b + i + k;
+    }
+
+    const obj1 = {
+        a: 1,
+        b: 2,
+    };
+
+    console.log(sum1.call(obj1, 3, 4)); //10
+    console.log(sum1.apply(obj1, [3, 4])); //10
+
+    function sum() {
+        return this.a + this.b;
+    }
+
+    const temp = {
+        a: 3,
+        b: 4,
+    };
+    const sum2 = sum.bind(temp);
+    console.log(sum2); //??
+
+    const block = {
+        a: 1,
+        b: 2,
+        sum: sum,
+    };
+    console.log(block.sum()); //3
+    console.log(sum()); //NaN
+
+    function summary(a, b) {
+        return a + b;
+    }
+
+    let sumWith5 = summary.bind(null, 5);
+    console.log(sumWith5(3));
+});
+
+
+document.getElementById('shortExampleThis').addEventListener('click', () => {
+// this
+// example 1
+    (() => {
+        const prod1 = {
+            name: 'Intel',
+            price: 100,
+            getPrice: function () {
+                console.log(this);
+            }
+        };
+        prod1.getPrice(); //object prod1
+
+        function getPrice() {
+            console.log(this.price); // undefined cause window is this
+        }
+
+        getPrice();
+    })();
+
+// example 1 modified
+    (() => {
+        const prod1 = {
+            name: 'Intel',
+            price: 100,
+            getPrice,
+        };
+
+        const prod2 = {
+            name: 'Intel',
+            price: 200,
+            getPrice,
+        };
+
+        const prod3 = {
+            name: 'Intel12',
+            price: 300,
+        };
+
+        function getPrice(currency = '$') {
+            console.log(currency + this.price); // 100
+        }
+
+        prod1.getPrice();
+        prod2.getPrice();
+
+        getPrice.call(prod3, '*');
+        getPrice.apply(prod3, ['*']);
+
+        const getPriceBind = prod2.getPrice.bind(prod2, '*');
+        setTimeout(prod2.getPrice, 1000); // undefined cause we have no correct context
+        setTimeout(getPriceBind, 1000); //*200
+    })();
+});
+
+document.getElementById('destr').addEventListener('click', () => {
+//desctructuring
+    const obj = {a: 5, b: 8};
+    const {a, b} = obj;
+    console.log(a, b); // 5 8
+
+    const user = {
+        firstName: 'Tanya',
+        lastName: 'L',
+        age: 20,
+        info: {
+            work: 'Itra',
+            skills: ['html', 'css', 'js']
+        }
+    };
+    const {info: {work}} = user;
+    console.log(work);
+// const {firstName:name, lastName, age = 30} = user;
+// console.log(name, lastName, age);
+
+//example 1
+    const colour = ['white', 'red', 'black'];
+    const [w, r, bl, gr = 'green'] = colour;
+    console.log(w, r, bl, gr);
+
+//example 2
+    const nestedArr = ['hello', ['key', 'value']];
+    const [, [key, value]] = nestedArr;
+    console.log(key, value);
+
+//example 3
+    const names = ['Tanya', 'Misha', 'Lera', 'Andrey'];
+    const [name1, ...otherNames] = names; // Tanya (3) ["Misha", "Lera", "Andrey"]
+    console.log(name1, otherNames);
+
+    const [...newArrNames] = names;
+    console.log(newArrNames); // ["Tanya", "Misha", "Lera", "Andrey"]
+
+    const newNames = [...names];
+    console.log(newNames); // ["Tanya", "Misha", "Lera", "Andrey"]
+
+    const colourNames = [...colour, ...names];
+    console.log(colourNames);
+});
+
