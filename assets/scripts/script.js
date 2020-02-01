@@ -218,7 +218,7 @@ document.getElementById('closure').addEventListener('click', () => {
     console.log(sumAll(1, 2, 3, 4, 5, 6, 7, 8, 9));
 });
 
-//rest and spread
+//rest (склеивает) and spread ()
 document.getElementById('restSpread').addEventListener('click', () => {
     //spread
     const numbers = [1, 2, 3, 4, 5];
@@ -525,7 +525,7 @@ document.getElementById('destr').addEventListener('click', () => {
         }
     };
     const {info: {work}} = user;
-    console.log(work);
+    console.log(work); //Itra
 // const {firstName:name, lastName, age = 30} = user;
 // console.log(name, lastName, age);
 
@@ -539,7 +539,7 @@ document.getElementById('destr').addEventListener('click', () => {
     const [, [key, value]] = nestedArr;
     console.log(key, value);
 
-//example 3
+//example 3 rest
     const names = ['Tanya', 'Misha', 'Lera', 'Andrey'];
     const [name1, ...otherNames] = names; // Tanya (3) ["Misha", "Lera", "Andrey"]
     console.log(name1, otherNames);
@@ -552,5 +552,81 @@ document.getElementById('destr').addEventListener('click', () => {
 
     const colourNames = [...colour, ...names];
     console.log(colourNames);
+});
+
+//Object define property and map
+document.getElementById('objDefProp').addEventListener('click', () => {
+    (() => {
+        const user = {
+            firstName: 'Василий',
+            toString: function () {
+                return 'Пользователь ' + this.firstName;
+            }
+        };
+        console.log(user);
+
+        for (let key in user) {
+            console.log(key); //firstName // toString
+        }
+
+        const arr = {};
+        console.log(Object.keys(user)); //["firstName", "toString"]
+        console.log(Object.keys(arr));  // []
+
+        const panda = {};
+        panda.color = 'black';
+
+        Object.defineProperty(panda, 'color', {
+            configurable: false,
+            writable: false,
+            enumerable: false,
+            value: 'red'
+        });
+        panda.color = 'yellow';
+
+        console.log(Object.keys(panda));
+        console.log(panda); //red if writable false
+// for in !
+// Object.defineProperty(obj, prop, descriptor)
+// Object.getOwnPropertyDescriptor(obj, prop)
+        const d = Object.getOwnPropertyDescriptor(panda, 'color'); //{value: "red", writable: false, enumerable: false, configurable: false}
+        console.log(d);
+
+        console.log(new Date(0).toString());
+
+        const arrSlice = [1, 2, 3, 4];
+        console.log(arrSlice.splice(1, 2)); //[2,3]
+        console.log(arrSlice); // [1,4]
+    })();
+
+    (() => {
+        let arr = [
+            {
+                age: 25,
+                name: 'dd'
+            },
+            {
+                age: 20,
+                name: 'rr'
+            },
+            {
+                age: 13,
+                name: 'rr'
+            }
+        ];
+
+        let names = arr.map(item => {
+            let isAdult = item.age >= 18;
+            return {...item, isVisible: isAdult};
+            // long way below
+            // return {
+            //     age: item.age, name: item.name, isVisible: isAdult
+            // }
+        });
+        console.log(names);
+// 0: {age: 25, name: "dd", isVisible: true}
+// 1: {age: 20, name: "rr", isVisible: true}
+// 2: {age: 13, name: "rr", isVisible: false}
+    })();
 });
 
