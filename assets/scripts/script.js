@@ -883,6 +883,7 @@ document.getElementById('reduceMethod').addEventListener('click', () => {
 document.getElementById('smallTickets').addEventListener('click', () => {
     const fizz = 'fizz';
     const buzz = 'buzz';
+
     function getFizzBuzzNumbers(number) {
         for (let i = 1; i <= number; i++) {
             if (i % 3 === 0 && i % 5 === 0) {
@@ -922,3 +923,67 @@ document.getElementById('smallTickets').addEventListener('click', () => {
     // dd(15);
 });
 
+
+function checkIfAnagram(word, comparedWord) {
+    const sortedLetters = (letters) => letters.toLowerCase().split('').sort().toString();
+
+    let wordSorted = sortedLetters(word);
+    let comparedWordSorted = sortedLetters(comparedWord);
+
+    if (wordSorted === comparedWordSorted) {
+        console.log(`${word} and ${comparedWord} are anagrams`);
+    }
+    else {
+        console.log('Please try another pair of words');
+    }
+
+}
+checkIfAnagram('finder', 'friend');
+checkIfAnagram('ffdfgf', 'b');
+
+(() => {
+//fibonacchi case 1
+    const fibonacchi = number => {
+        let prevValue = 0, nextValue = 1;
+        for (let i = 0; i < number; i++) {
+            nextValue = prevValue + nextValue;
+            prevValue = nextValue - prevValue;
+        }
+        return prevValue;
+    };
+
+    let fibonacchiNumber = fibonacchi(7);
+    console.log(fibonacchiNumber); //13
+})();
+
+(() => {
+    //fibonacchi case 2
+    function fibonacchi(number) {
+        if (number <= 0) {
+            return 0;
+        }
+        else if (number == 1) {
+            return 1;
+        }
+        else {
+            return fibonacchi(number - 1) + fibonacchi(number - 2);
+        }
+    }
+
+    let fibonacchiNumber = fibonacchi(7);
+    console.log(fibonacchiNumber); //13
+})();
+
+
+(() => {
+    function sumAllPages(total) {
+        let sumValue = 0;
+        for (let i = 0; i <= total; i++) {
+            sumValue += i;
+        }
+        return sumValue;
+    }
+
+    console.log(sumAllPages(15));//120
+    console.log(sumAllPages(9));//45
+})();
