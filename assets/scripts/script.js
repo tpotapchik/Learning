@@ -453,7 +453,6 @@ document.getElementById('callBind').addEventListener('click', () => {
     console.log(sumWith5(3));
 });
 
-
 document.getElementById('shortExampleThis').addEventListener('click', () => {
 // this
 // example 1
@@ -628,5 +627,298 @@ document.getElementById('objDefProp').addEventListener('click', () => {
 // 1: {age: 20, name: "rr", isVisible: true}
 // 2: {age: 13, name: "rr", isVisible: false}
     })();
+});
+
+document.getElementById('salaries').addEventListener('click', () => {
+    //task1
+    (() => {
+        let salaries = {
+            John: 100,
+            Ann: 160,
+            Pete: 130
+        };
+
+        let sum = 0;
+
+        for (let key in salaries) {
+            // if (salaries.hasOwnProperty(salaries[key])) {
+            sum += salaries[key];
+            // }
+        }
+        console.log('method1 ' + sum);
+    })();
+
+    (() => {
+        let salaries = {
+            John: 100,
+            Ann: 160,
+            Pete: 130
+        };
+
+        let summary = Object.keys(salaries).reduce((previous, key) => previous + salaries[key], 0);
+        console.log('method2 ' + summary);
+    })();
+
+    (() => {
+        let salaries = {
+            John: 100,
+            Ann: 160,
+            Pete: 130
+        };
+
+        function sum1() {
+            return this.John + this.Ann + this.Pete;
+        }
+
+        let summary = sum1.call(salaries);
+        console.log('method3 ' + summary);
+    })();
+
+    (() => {
+        let salaries = {
+            John: 100,
+            Ann: 160,
+            Pete: 130
+        };
+
+        let salaryAverage = Object.values(salaries);
+
+        let summary = salaryAverage.reduce((acc, curr) => {
+                return acc + curr;
+            }, 0) / salaryAverage.length;
+        console.log('method4 average ' + summary); // 130
+    })();
+});
+
+document.getElementById('flats').addEventListener('click', () => {
+    const getRandom = function (min, max) {
+        return Math.round(Math.random() * (max - min) + min);
+    };
+
+    let floors = getRandom(1, 25);
+    let porches = getRandom(1, 10);
+    let flatsOnPorch = getRandom(1, 20);
+    let flat = parseInt(prompt('flat number'));
+
+    if (isNaN(flat) || flat < 1) {
+        alert('Please insert correct number');
+        return;
+    }
+    else if (floors * porches * flatsOnPorch < flat) {
+        alert('This flat doesn\'t exist');
+        return;
+    }
+
+    let floor = Math.ceil(flat / flatsOnPorch);
+    let porch = Math.ceil(floor / floors);
+    floor -= (porch - 1) * floors;
+
+    console.log(`Your flat ${flat} in on № floor ${floor}, № porch ${porch}`);
+    console.log(`total floors: ${floors}, total porches: ${porches},total flatsOnPorch: ${flatsOnPorch}`);
+});
+
+document.getElementById('sequence').addEventListener('click', () => {
+    (() => {
+        (() => {
+            // case 1 (better cause we didn't change start value)
+            function sequence(start = 0, step = 1) {
+                let value = start - step;
+                return function () {
+                    return value += step;
+                };
+            }
+
+            let generator = sequence(10, 3);
+
+            console.log(generator()); //10
+            console.log(generator()); //13
+            console.log(generator()); //16
+            console.log(generator()); //19
+            console.log(generator()); //22
+            console.log(generator()); //25
+
+        })();
+
+        // case1
+        function sequence(start, step = 1) {
+            let value = 0;
+            return function () {
+                value = start + step;
+                return start = value;
+            }
+        }
+
+        let generator = sequence(10, 3);
+
+        console.log(generator()); //13
+        console.log(generator()); //16
+        console.log(generator()); //19
+        console.log(generator()); //22
+        console.log(generator()); //25
+    })();
+});
+
+document.getElementById('sumAnyNumbers').addEventListener('click', () => {
+    (() => {
+        function sum(a) {
+            const f = function (b) {
+                return sum(a + b);
+            };
+            f.toString = function () {
+                return a.toString();
+            };
+            return f;
+        }
+
+        let x = sum(2)(5)(10);
+        console.log(x);
+    })();
+
+//trial version
+    (() => {
+        function sum(a) {
+            return function (b) {
+                return function (c) {
+                    return a + b + c;
+                }
+            }
+        }
+
+        let x = sum(2)(5)(10);
+        console.log(x);
+    })();
+});
+
+document.getElementById('reduceMethod').addEventListener('click', () => {
+    const array = [1, 2, 3, 4, 5];
+// checks whether an element is even
+    const even = (element) => element % 2 === 0;
+    console.log(array.some(even));
+
+    (() => {
+        //reduce
+        const arr = [
+            {
+                age: 18,
+                name: 'Tanya'
+            },
+            {
+                age: 25,
+                name: 'Vasili'
+            },
+            {
+                age: 12,
+                name: 'Peter'
+            },
+            {
+                age: 19,
+                name: 'Sonya'
+            },
+        ];
+
+        let sumAges1 = arr.reduce((acc, curr) => {
+            return acc + curr.age;
+        }, 0);
+        console.log(sumAges1); //74
+
+        let sumAges = arr.reduce((acc, curr) => {
+            if (curr.name !== 'Peter') {
+                acc += curr.age;
+            }
+            return acc;
+        }, 0);
+        console.log(sumAges); //62
+
+        let filteredArr = arr.reduce((acc, curr, index) => {
+            if (curr.age >= 18) {
+                acc.push({...curr, id: index});
+            }
+            return acc;
+        }, []);
+        console.log(filteredArr);
+
+        let averageAge = arr.reduce((acc, curr) => acc + curr.age, 0) / arr.length;
+        console.log(averageAge);
+
+        let users = arr.reduce((acc, curr) => {
+            acc[curr.name] = curr;
+            return acc;
+        }, {});
+        console.log(users);
+
+        //
+        const userArr = [
+            {
+                age: 18,
+                name: 'Tanya'
+            },
+            {
+                age: 25,
+                name: 'Vasili'
+            },
+            {
+                age: 12,
+                name: 'Peter'
+            },
+            {
+                age: 19,
+                name: 'Sonya'
+            },
+        ];
+
+        let integred = userArr.reduce((acc, curr, index) => {
+            if (curr.age >= 18) {
+                acc.push({
+                    ...curr,
+                    id: index
+                });
+            }
+            return acc;
+
+        }, []);
+        console.log(integred);
+    })();
+});
+
+document.getElementById('smallTickets').addEventListener('click', () => {
+    const fizz = 'fizz';
+    const buzz = 'buzz';
+    function getFizzBuzzNumbers(number) {
+        for (let i = 1; i <= number; i++) {
+            if (i % 3 === 0 && i % 5 === 0) {
+                console.log(`${fizz + buzz}`);
+            }
+            else if ((i % 3 === 0)) {
+                console.log(`${fizz}`);
+            }
+            else if ((i % 5 === 0)) {
+                console.log(`${buzz}`);
+            }
+            else {
+                console.log(i);
+            }
+        }
+    }
+
+    getFizzBuzzNumbers(15);
+
+    // function dd(x) {
+    //     let arr = new Array(x).fill(0).map((x, i) => i + 1);
+    //     for (let i = 0; i < arr.length; i++) {
+    //         if (i % 3 === 0 && i % 5 === 0) {
+    //             console.log(`${fizz + buzz}`);
+    //         }
+    //         else if ((i % 3 === 0)) {
+    //             console.log(`${fizz}`);
+    //         }
+    //         else if ((i % 5 === 0)) {
+    //             console.log(`${buzz}`);
+    //         }
+    //         else {
+    //             console.log(arr[i]);
+    //         }
+    //     }
+    // }
+    // dd(15);
 });
 
