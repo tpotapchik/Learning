@@ -902,6 +902,7 @@ document.getElementById('smallTickets').addEventListener('click', () => {
     }
 
     getFizzBuzzNumbers(15);
+    console.log('___');
 
     // function dd(x) {
     //     let arr = new Array(x).fill(0).map((x, i) => i + 1);
@@ -921,69 +922,81 @@ document.getElementById('smallTickets').addEventListener('click', () => {
     //     }
     // }
     // dd(15);
+
+    (() => {
+        function checkIfAnagram(word, comparedWord) {
+            const sortedLetters = (letters) => letters.toLowerCase().split('').sort().join('');
+
+            let wordSorted = sortedLetters(word);
+            let comparedWordSorted = sortedLetters(comparedWord);
+
+            if (!wordSorted.length === comparedWordSorted.length || (wordSorted.length = 0) || (comparedWordSorted.length = 0)) {
+                return;
+            }
+
+            if (wordSorted === comparedWordSorted) {
+                console.log(`${word} and ${comparedWord} are anagrams`);
+            }
+            else {
+                console.log('Please try another pair of words');
+            }
+        }
+
+        checkIfAnagram('Finder', 'friend'); //finder and friend are anagrams
+        checkIfAnagram('ffdfgf', 'b'); //Please try another pair of words
+        checkIfAnagram('ffdfgf', ''); //Please try another pair of words
+        checkIfAnagram('ffdfgf', 'ffdfgff'); //Please try another pair of words
+
+    })();
+
+    (() => {
+//fibonacchi case 1
+        const fibonacci = number => {
+            let prevValue = 0, nextValue = 1;
+            for (let i = 0; i < number; i++) {
+                nextValue = prevValue + nextValue;
+                prevValue = nextValue - prevValue;
+            }
+            return prevValue;
+        };
+
+        let fibonacciNumber = fibonacci(7);
+        console.log(fibonacciNumber); //13
+    })();
+
+    (() => {
+        //fibonacci case 2
+        function fibonacci(number) {
+            if (number <= 0) {
+                return 0;
+            }
+            else if (number == 1) {
+                return 1;
+            }
+            else {
+                return fibonacci(number - 1) + fibonacci(number - 2);
+            }
+        }
+
+        let fibonacciNumber = fibonacci(7);
+        console.log(fibonacciNumber); //13
+    })();
+
+    (() => {
+        //calculate sum of all numbers in pages,ie 13=1+3
+        function sumAllPages(total) {
+            let arr = [];
+            for (let i = 0; i <= total; i++) {
+                arr[i] = i;
+            }
+
+            return arr.join('').split('').reduce((acc, curr) => {
+                return acc += parseInt(curr);
+            }, 0);
+        }
+
+        console.log(sumAllPages(3)); //6
+        console.log(sumAllPages(500)); //5505
+    })();
 });
 
-
-function checkIfAnagram(word, comparedWord) {
-    const sortedLetters = (letters) => letters.toLowerCase().split('').sort().toString();
-
-    let wordSorted = sortedLetters(word);
-    let comparedWordSorted = sortedLetters(comparedWord);
-
-    if (wordSorted === comparedWordSorted) {
-        console.log(`${word} and ${comparedWord} are anagrams`);
-    }
-    else {
-        console.log('Please try another pair of words');
-    }
-
-}
-checkIfAnagram('finder', 'friend');
-checkIfAnagram('ffdfgf', 'b');
-
-(() => {
-//fibonacchi case 1
-    const fibonacchi = number => {
-        let prevValue = 0, nextValue = 1;
-        for (let i = 0; i < number; i++) {
-            nextValue = prevValue + nextValue;
-            prevValue = nextValue - prevValue;
-        }
-        return prevValue;
-    };
-
-    let fibonacchiNumber = fibonacchi(7);
-    console.log(fibonacchiNumber); //13
-})();
-
-(() => {
-    //fibonacchi case 2
-    function fibonacchi(number) {
-        if (number <= 0) {
-            return 0;
-        }
-        else if (number == 1) {
-            return 1;
-        }
-        else {
-            return fibonacchi(number - 1) + fibonacchi(number - 2);
-        }
-    }
-
-    let fibonacchiNumber = fibonacchi(7);
-    console.log(fibonacchiNumber); //13
-})();
-
-
-(() => {
-    function sumAllPages(total) {
-        let sumValue = 0;
-        for (let i = 0; i <= total; i++) {
-            sumValue += i;
-        }
-        return sumValue;
-    }
-
-    console.log(sumAllPages(15));//120
-    console.log(sumAllPages(9));//45
-})();
