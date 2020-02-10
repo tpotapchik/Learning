@@ -18,13 +18,13 @@ document.getElementById('calculate').addEventListener('click', () => {
         const listItem = document.createElement('li');
 
         if (i % 3 === 0 && i % 5 === 0) {
-            listItem.textContent = `${fizz + buzz}`;
+            listItem.textContent = fizz + buzz;
         }
         else if ((i % 3 === 0)) {
-            listItem.textContent = `${fizz}`;
+            listItem.textContent = fizz;
         }
         else if ((i % 5 === 0)) {
-            listItem.textContent = `${buzz}`;
+            listItem.textContent = buzz;
         }
         else {
             listItem.textContent = i;
