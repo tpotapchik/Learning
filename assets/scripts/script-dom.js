@@ -37,3 +37,44 @@ document.getElementById('calculate').addEventListener('click', () => {
     form.reset();
 });
 
+(() => {
+    let elem = [...document.getElementsByClassName('list-item')];
+    elem.forEach((button) => {
+        button.addEventListener('click', function () {
+            alert(this.textContent);
+        })
+    });
+})();
+
+(() => {
+    Array.from(document.querySelectorAll('.list-item-2')).forEach((button) => {
+        button.addEventListener('click', function () {
+            alert(this.textContent);
+        })
+    });
+})();
+
+(() => {
+    let el = document.getElementsByClassName('list-3')[0];
+    el.addEventListener('click', (e) => {
+        console.log(e.target);
+        alert(e.target.textContent);
+    })
+})();
+
+(() => {
+    let el = document.getElementsByClassName('result')[0];
+    let parentEl = document.getElementsByClassName('wrap')[0];
+    let minusVal = document.getElementsByClassName('button-minus')[0];
+    let plusVal = document.getElementsByClassName('button-add')[0];
+
+    parentEl.addEventListener('click', (e) => {
+        if (e.target === plusVal) {
+            el.value++;
+        }
+
+        if (e.target === minusVal) {
+            el.value--;
+        }
+    });
+})();
