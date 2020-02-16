@@ -78,3 +78,24 @@ document.getElementById('calculate').addEventListener('click', () => {
         }
     });
 })();
+
+(() => {
+    let field = document.getElementsByClassName('textarea-field')[0];
+
+    if (localStorage) {
+        field.value = localStorage.getItem('text');
+    }
+
+    document.getElementById('setVal').addEventListener('click', () => {
+        localStorage.setItem('text', field.value);
+    });
+
+    document.getElementById('emptyVal').addEventListener('click', () => {
+        localStorage.removeItem('text');
+        field.value= '';
+    });
+})();
+
+
+
+
