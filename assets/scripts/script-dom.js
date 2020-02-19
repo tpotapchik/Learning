@@ -92,10 +92,6 @@ document.getElementById('calculate').addEventListener('click', () => {
 
     document.getElementById('emptyVal').addEventListener('click', () => {
         localStorage.removeItem('text');
-        field.value= '';
+        field.value = '';
     });
 })();
-
-
-
-

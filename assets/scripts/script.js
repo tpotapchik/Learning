@@ -386,9 +386,14 @@ document.getElementById('callBind').addEventListener('click', () => {
     console.log(helloWorld());
 
     let arr = [0, 1, 2].map(item => {
-        return item *= 2;
+        return item *= 2; // callback returns what we need
     });
     console.log(arr);
+
+    let arr2 = [0, 1, 2].filter(item => {
+        return item > 0; //true или false вовзр (callback)
+    });
+    console.log(arr2);
 
 //call
     function getSquare(s1, s2) {
@@ -997,6 +1002,82 @@ document.getElementById('smallTickets').addEventListener('click', () => {
 
         console.log(sumAllPages(3)); //6
         console.log(sumAllPages(500)); //5505
+    })();
+});
+
+document.getElementById('promise1').addEventListener('click', () => {
+    //promise
+    function sum(a, b) {
+        return new Promise((resolve, reject) => {
+            if (typeof a !== 'number' || typeof b !== 'number' || isNaN(a) && isNaN(b)) {
+                reject(new Error('One of params is not a number'));
+                // throw new Error('One of params is not a number') //alternative way
+            }
+            else {
+                setTimeout(() => {
+                    resolve(a + b)
+                }, 10000)
+            }
+        })
+    }
+
+    let tmp = sum(1, 'dd');
+    tmp.then(sum => console.log(sum))
+        .catch(ex => console.error(ex));
+});
+
+document.getElementById('promise2').addEventListener('click', () => {
+    let value = prompt('Please insert number of squatting');
+    let qty = Number(value);
+    let qtyResult = checkQty(qty);
+
+    function checkQty(qty) {
+        return new Promise((resolve, reject) => {
+            if (typeof qty !== 'number' || isNaN(qty) || qty <= 0) {
+                reject(new Error('do it yourself'));
+            }
+            else if (qty > 100) {
+                reject(new Error('I am tired'));
+            }
+            else {
+                setTimeout(() => {
+                    resolve(`you did ${qty}!`)
+                }, 1000 * qty)
+            }
+        })
+    }
+
+    qtyResult.then(checkQty => console.log(checkQty))
+        .catch(ex => console.error(ex));
+});
+
+document.getElementById('promise3').addEventListener('click', () => {
+    (async function () {
+        let value = prompt('Please insert number of squatting');
+        let qty = Number(value);
+
+        function checkQty(qty) {
+            return new Promise((resolve, reject) => {
+                if (typeof qty !== 'number' || isNaN(qty) || qty <= 0) {
+                    reject(new Error('do it yourself'));
+                }
+                else if (qty > 100) {
+                    reject(new Error('I am tired'));
+                }
+                else {
+                    setTimeout(() => {
+                        resolve(`you did ${qty}!`)
+                    }, 1000)
+                }
+            });
+        }
+
+        try {
+            let message = await checkQty(qty);
+            console.log(message);
+        } catch (ex) {
+            console.error(ex);
+        }
     })();
 });
 
