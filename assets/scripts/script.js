@@ -1081,3 +1081,9 @@ document.getElementById('promise3').addEventListener('click', () => {
     })();
 });
 
+// (function () {
+//     setTimeout(() => console.log(2), 0);
+//     new Promise((resolve) => resolve.then(console.log(3)))
+//     console.log(4);
+// });
+
