@@ -1115,3 +1115,66 @@ const circle = new Circle({
 //     cacheUser(lena); //false
 //     cacheUser(alex); //true
 // })();
+
+(() => {
+    function* numberGen(n = 10) {
+        for (let i = 0; i < n; i++) {
+            yield i;
+        }
+    }
+
+    const num = numberGen(4);
+    console.log(num.next()); //0
+    console.log(num.next()); //1
+    console.log(num.next()); //2
+    console.log(num.next()); //3
+    console.log(num.next()); //undefined
+})();
+
+document.getElementById('massiveMethods').addEventListener('click', () => {
+    const people = [
+        {name: 'Tanya', age: 18, budget: 4000},
+        {name: 'Misha', age: 20, budget: 8000},
+        {name: 'Lera', age: 15, budget: 500},
+        {name: 'Andrey', age: 22, budget: 3000},
+        {name: 'Kate', age: 17, budget: 1000},
+    ];
+
+    for (let i = 0; i < people.length; i++) {
+        console.log(people[i]);
+    }
+
+    for (let person of people) {
+        console.log(person);
+    }
+
+    people.forEach(person => console.log(person));
+
+    //map
+    const newPeople = people.map(person => {
+        return `${person.name} (${person.age})`;
+    });
+    console.log(newPeople);
+
+    //filter
+    const adults = people.filter(person => person.age >= 18);
+    console.log(adults);
+
+    //reduce
+    // let amount = 0;
+    // for (let i = 0; i < people.length; i++) {
+    //     amount+=people[i].budget;
+    // }
+    // console.log(amount);
+
+    const amount = people.reduce((total, person) => total + person.budget, 0)
+    console.log(amount);
+
+    //find
+    const tanya = people.find(person => person.name === 'Tanya');
+    console.log(tanya);
+
+    //find index
+    const tanyaIndex = people.findIndex(person => person.name === 'Tanya');
+    console.log(tanyaIndex);
+});
